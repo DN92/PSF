@@ -9,7 +9,7 @@ const formClientQuestionnaire = (props) => {
     lastName: '',
     email: '',
     aboutYou: '',
-    firstCat: '',
+    firstCat: false,
     otherPets: '',
     city: '',
     state: '',
@@ -29,16 +29,28 @@ const formClientQuestionnaire = (props) => {
     setClientInfo(
       prevClientInfo => {
         return {...prevClientInfo, [event.target.name]: event.target.value}
-      })
+      }
+    )
     console.log(clientInfo)
   }
 
   const handleCatPref = (event) => {
-
+    event.persist();
+    setCatPref(
+      prevCatPref => {
+        return {... prevCatPref, [event.target.name]: event.target.value}
+      }
+    )
+    console.log(catPref)
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const allInfo = {
+      clientInfo,
+      catPref,
+    }
+    console.log(allInfo)
   }
 
   return (
@@ -58,13 +70,13 @@ const formClientQuestionnaire = (props) => {
           <input type="email" name="email" value={clientInfo.email} /><br />
           {/* client about yourself */}
           <label htmlFor="aboutYou">Tell Us About Yourself</label><br />
-          <input type="text" name="aboutYou" value="" /><br />
+          <textarea rows="4" cols="50" name="aboutYou" value={clientInfo.aboutYou} /><br />
           {/* client first time cat owner? */}
-          <label htmlFor="firstCat">Are you a first time cat owner?</label><br />
-          <input type="radio" name="firstCat" value={clientInfo.firstCat} />
-          <label htmlFor="yesToFirstCat">Yes</label>
-          <input type="radio" name="firstCatNo" value="" />
-          <label htmlFor="noToFirstCat">No</label><br />
+          <label htmlFor="firstCat">Will this be your first cat?</label><br />
+          <select name="firstCat">
+            <option value={false}>No</option>
+            <option value={true}>Yes</option>
+          </select> <br />
           {/* client other pets? */}
           <label htmlFor="otherPets">If you own other pets, please list them.</label><br />
           <input type="text" name="otherPets" value={clientInfo.otherPets} />
@@ -78,33 +90,41 @@ const formClientQuestionnaire = (props) => {
           <input type="text" name="state" value={clientInfo.state} /><br />
         </div>
 
-        <h2>What are you looking for in your kitty?</h2>
-        {/* cat gender */}
-        <label htmlFor="kittyGender">Gender</label><br />
-        <input type="radio" name="genderMale" value="" />
-        <label htmlFor="answerMale">Male</label>
-        <input type="radio" name="genderFemale" value="" />
-        <label htmlFor="answerMale">Female</label><br />
-        {/* cat ears */}
-        <label htmlFor="kittyEars">Ears</label><br />
-        <input type="radio" name="fold" value="" />
-        <label htmlFor="answerFold">Fold</label>
-        <input type="radio" name="Straight" value="" />
-        <label htmlFor="answerStraight">Straight</label><br />
-        {/* cat color */}
-        <label htmlFor="kittyColor">Color</label><br />
-        <input type="text" name="color" value="" /><br />
-        {/* cat most important feature */}
-        <label htmlFor="importantFeature">What is the most import feature you are looking for in your kitten?</label><br />
-        <input type="text" name="mif" value="" /><br />
+        <div onChange={handleCatPref}>
+          <h2>What are you looking for in your kitty?</h2>
+          {/* cat gender */}
+          <label htmlFor="kittyGender">Gender</label><br />
+          <select name="gender">
+            <option value=""></option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select> <br />
+          {/* cat ears */}
+          <label htmlFor="kittyEars">Ears</label><br />
+          <select name="ears">
+            <option value=""></option>
+            <option value="fold">Fold</option>
+            <option value="straight">Straight</option>
+          </select> <br />
+          {/* cat color */}
+          <label htmlFor="kittyColor">Color</label><br />
+          <input type="text" name="color" value={catPref.color} /><br />
+          {/* cat most important feature */}
+          <label htmlFor="importantFeature">What is the most import feature you are looking for in your kitten?</label><br />
+          <input type="text" name="mif" value={catPref.mif} /><br />
+        </div>
 
-        <h2>Your FaceBook and Instagram</h2>
+        <div onChange={handleClientInfo}>
+          <h2>Your FaceBook and Instagram</h2>
 
-        <label htmlFor="clientFB">Your FaceBook</label><br />
-        <input type="text" name="clientFB" value="" /><br />
+          <label htmlFor="clientFB">Your FaceBook</label><br />
+          <input type="text" name="fB" value={clientInfo.fB} /><br />
 
-        <label htmlFor="clientIG">Your Instagram</label><br />
-        <input type="text" name="clientIG" value="" /><br />
+          <label htmlFor="clientIG">Your Instagram</label><br />
+          <input type="text" name="iG" value={clientInfo.iG} /><br />
+        </div>
+
+        <input type="submit" />
 
       </form>
     </div>
