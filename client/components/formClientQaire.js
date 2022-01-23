@@ -47,8 +47,8 @@ const formClientQuestionnaire = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const allInfo = {
-      clientInfo,
-      catPref,
+      ... clientInfo,
+      ... catPref,
     }
     console.log(allInfo)
   }
@@ -91,7 +91,7 @@ const formClientQuestionnaire = (props) => {
         </div>
 
         <div onChange={handleCatPref}>
-          <h2>What are you looking for in your kitty?</h2>
+          <h2>What are your preferences in a kitten?</h2>
           {/* cat gender */}
           <label htmlFor="kittyGender">Gender</label><br />
           <select name="gender">
@@ -115,7 +115,7 @@ const formClientQuestionnaire = (props) => {
         </div>
 
         <div onChange={handleClientInfo}>
-          <h2>Your FaceBook and Instagram</h2>
+          <h2>Your FaceBook and/or Instagram</h2>
 
           <label htmlFor="clientFB">Your FaceBook</label><br />
           <input type="text" name="fB" value={clientInfo.fB} /><br />
